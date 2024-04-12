@@ -1,127 +1,59 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include "Astronauta.hpp"
+#include "Voo.hpp"
 
 using namespace std;
-class Voo {
-    int codigo;
-    int estado;
-    // 1 - planejamento
-    // 2 - em curso
-    // 3 - finalziado
-    public:
-        Voo(int codigo){
-            this->codigo=codigo;
-            this->estado=1;
-        }
-        
-        void setCodigo(int codigo) {
-            this->codigo = codigo;
-        }
-
-        int getCodigo() {
-            return codigo;
-        }
-        int getEstado() {
-            return estado;
-        }
-
-        void setEstado(int novo_estado) {
-            estado = novo_estado;
-        }
-    //cadastrar voo
-    // adicionar astronauta no voo (codigo do voo e cpf do astronauta)
-    // remover astronauta do voo (codigo do voo e cpf do astronauta)
-};
-
-class Astronauta {
-
-    string cpf;
-    string nome;
-    int idade;
-    bool vivo=true;
-    int codigoVoo;
-    bool disponibilidade=true;
-    vector<Voo> voos;
-
-    public:
-        Astronauta(string nome, string cpf, int idade){
-            this->nome = nome;
-            this->cpf = cpf;
-            this->idade = idade;
-        };
-
-        int getCodigoVoo(){
-            return codigoVoo;
-        }
-
-        void setCodigoVoo(int codigoVoo){
-            this->codigoVoo = codigoVoo;
-        }
-
-        string getNome(){
-            return nome;
-        }
-
-        string getCpf(){
-            return cpf;
-        }
-
-        int getIdade(){
-            return idade;
-        }
-
-        // Métodos setters
-        void setNome(string nome) {
-            this->nome = nome;
-        }
-
-        void setCpf(string cpf) {
-            this->cpf = cpf;
-        }
-
-        void setIdade(int idade) {
-            this->idade = idade;
-        }
-
-    
-};
-
-
-class missaoEspacial{
-    vector<Astronauta> listaPassageiros;
-    Voo voo;
-    
-    public:
-
-};
 
 void cadastrarAstronauta(vector<Astronauta> &astronautas){
     string nome;
     string cpf;
     int idade;
-    cout << "Digite o nome do astronauta:" << endl;
+    cout << "Digite o nome do astronauta: ";
     cin >> nome;
-    cout << "Digite o CPF do astronauta:" << endl;
+    cout << "" << endl;
+    
+    cout << "Digite o CPF do astronauta: ";
     cin >> cpf;
-    cout << "Digite a idade do astronauta:" << endl;
+    cout << "" << endl;
+    
+    cout << "Digite a idade do astronauta: ";
     cin >> idade; 
+    cout << "" << endl;
+    
     astronautas.push_back(Astronauta(nome, cpf, idade));
-
+    cout << "Astronauta cadastrado com sucesso!" << endl;
 };
 
 void cadastrarVoo(vector<Voo> &voos){
     int codigo;
-    cout << "Digite o código do voo:" << endl;
+    cout << "Digite o código do voo: ";
     cin >> codigo;
+    cout << "" << endl;
     voos.push_back(Voo(codigo));
+    cout << "Voo cadastrado com sucesso!" << endl;
 
 }
 
-void listarAstronautas(vector<Astronauta> &astronautas){
-    cout << "NOME" << "      CPF" << "      IDADE" << endl;
+void listarAstronautasMortos(vector<Astronauta> &astronautas){
     for (int i = 0; i < astronautas.size(); i++){
-        cout << astronautas[i].getNome() << "   " << astronautas[i].getCpf() << "   " << astronautas[i].getIdade() << endl;
+        if(astronautas[i].getVivo()==false){
+            cout << "Nome: " << astronautas[i].getNome() << ", CPF: " << astronautas[i].getCpf() 
+            << ", Idade: " << astronautas[i].getIdade() << ", Voos: ";
+            
+            vector<int> historicoDeVoos = astronautas[i].getHistoricoDeVoos();
+
+            for (int j = 0; j < historicoDeVoos.size(); j++){
+                cout << historicoDeVoos[j] << ", ";
+                if(j==historicoDeVoos.size()-1){
+                    cout << historicoDeVoos[j] << "";
+                } else {
+                    cout << historicoDeVoos[j] << ", ";
+                }
+            }
+            cout << "" << endl;
+        }
     }
 }
 
@@ -131,11 +63,9 @@ void adicionaAstronautaEmVoo(vector<Astronauta> &astronautas, vector<Voo> &voos)
     bool verificacao=false;
     int posicao_voo;
 
-    cout << "Digite o código do voo:" << endl;
+    cout << "Digite o código do voo: ";
     cin >> codigo;
-    cout << "Digite o CPF do astronauta:" << endl;
-    cin >> cpf;
-    
+    cout << "" << endl;
     for (int i=0; i < voos.size(); i++){
         if(codigo==voos[i].getCodigo()){
             verificacao=true;
@@ -145,23 +75,29 @@ void adicionaAstronautaEmVoo(vector<Astronauta> &astronautas, vector<Voo> &voos)
     
     if(verificacao==false){
         cout << "Voo inexistente" << endl;
+        return;
     } else {
         verificacao=false;
     }
+    cout << "Digite o CPF do astronauta:" << endl;
+    cin >> cpf;
     
     for (int j=0; j < astronautas.size(); j++){
         if(cpf==astronautas[j].getCpf()){
             verificacao=true;
             if(voos[posicao_voo].getEstado()==1){
                 astronautas[j].setCodigoVoo(codigo);
-                cout << "Astronauta adicionado com sucesso!" << endl;
+                cout << "O astronauta " << astronautas[j].getNome() 
+                << " foi adicionado ao voo " << voos[posicao_voo].getCodigo() 
+                << " com sucesso!" << endl;
             } else {
-                cout << "O voo não está em planejamento" << endl;
+                cout << "O voo não está em planejamento!" << endl;
             }
         }
     }
     if(verificacao==false){
-        cout << "CPF inexistente" << endl;
+        cout << "CPF inexistente!" << endl;
+        return;
     }
 }
 
@@ -170,11 +106,9 @@ void removeAstronautaDoVoo(vector<Astronauta> &astronautas, vector<Voo> &voos){
     string cpf;
     int posicao_voo;
     bool verificacao=false;
-    cout << "Digite o código do voo:" << endl;
+    cout << "Digite o código do voo: ";
     cin >> codigo;
-    cout << "Digite o CPF do astronauta:" << endl;
-    cin >> cpf;
-    
+    cout << "" << endl;
     for (int i=0; i < voos.size(); i++){
         if(codigo==voos[i].getCodigo()){
             verificacao=true;
@@ -184,24 +118,203 @@ void removeAstronautaDoVoo(vector<Astronauta> &astronautas, vector<Voo> &voos){
     
     if(verificacao==false){
         cout << "Voo inexistente" << endl;
+        return;
     } else {
         verificacao=false;
     }
+
+    cout << "Digite o CPF do astronauta: ";
+    cin >> cpf;
+    cout << "" << endl;
     
     for (int j=0; j < astronautas.size(); j++){
         if(cpf==astronautas[j].getCpf()){
             verificacao=true;
             if(voos[posicao_voo].getEstado()==1){
-                astronautas[j].setCodigoVoo(codigo);
-                cout << "Astronauta removido com sucesso!" << endl;
+                astronautas[j].setCodigoVoo(0);
+                cout << "O astronauta " << astronautas[j].getNome() 
+                << " foi removido do voo " << voos[posicao_voo].getCodigo() 
+                << " com sucesso!" << endl;
             } else {
                 cout << "O voo não está em planejamento" << endl;
             }
         }
     }
     if(verificacao==false){
-        cout << "CPF inexistente" << endl;
+        cout << "CPF inexistente!" << endl;
+        return;
     }
+}
+
+void listarVoos(vector<Astronauta> &astronautas, vector<Voo> &voos){
+    
+    cout << "Planejamento: " << endl;
+    for (int i = 0; i < voos.size(); i++){
+        
+        if(voos[i].getEstado()==1){
+            cout << "   Voo: " << voos[i].getCodigo()<< endl;
+            cout << "   Passageiros: " << endl;
+            
+            for (int j = 0; j < astronautas.size(); j++){
+                if(astronautas[j].getCodigoVoo() == voos[i].getCodigo()){
+                    cout << "       " << astronautas[j].getNome() << ", " << astronautas[j].getCpf() << ", " << astronautas[j].getIdade() << endl;
+                }        
+            }
+        }
+    }
+    cout << " " << endl;
+    cout << "Em Curso: " << endl;
+    for (int i = 0; i < voos.size(); i++){
+        
+        if(voos[i].getEstado()==2){
+            cout << "   Voo: " << voos[i].getCodigo()<< endl;
+            cout << "   Passageiros: " << endl;
+            
+            for (int j = 0; j < astronautas.size(); j++){
+                if(astronautas[j].getCodigoVoo() == voos[i].getCodigo()){
+                    cout << "       " << astronautas[j].getNome() << ", " << astronautas[j].getCpf() << ", " << astronautas[j].getIdade() << endl;
+                }        
+            } 
+        }
+    }
+    cout << " " << endl;
+    cout << "Finalizados com sucesso: " << endl;
+    for (int i = 0; i < voos.size(); i++){
+        
+        if(voos[i].getEstado()==3){
+            cout << "   Voo: " << voos[i].getCodigo()<< endl;
+            cout << "   Passageiros: " << endl;
+            
+            for (int j = 0; j < astronautas.size(); j++){
+                if(astronautas[j].getCodigoVoo() == voos[i].getCodigo()){
+                    cout << "       " << astronautas[j].getNome() << ", " << astronautas[j].getCpf() << ", " << astronautas[j].getIdade() << endl;
+                }        
+            }
+        }
+    }
+    cout << " " << endl;
+
+    cout << "Finalizados sem sucesso: " << endl;
+    for (int i = 0; i < voos.size(); i++){
+        
+        if(voos[i].getEstado()==4){
+            cout << "   Voo: " << voos[i].getCodigo()<< endl;
+            cout << "   Passageiros: " << endl;
+            
+            for (int j = 0; j < astronautas.size(); j++){
+                if(astronautas[j].getCodigoVoo() == voos[i].getCodigo()){
+                    cout << "       " << astronautas[j].getNome() << ", " << astronautas[j].getCpf() << ", " << astronautas[j].getIdade() << endl;
+                }        
+            }
+        }
+    }
+}
+
+void lancarVoo(vector<Astronauta> &astronautas, vector<Voo> &voos){
+    int codigoVooLancado;
+    int posicaoVoo;
+    int qtdPassageiros=0;
+    bool disponibilidadePassageiros=true;
+    bool verificacao=false;
+
+    cout << "Digite o código do Voo: ";
+    cin >> codigoVooLancado;
+    cout << " " << endl;
+
+    for (int i = 0; i < voos.size(); i++){
+        if(voos[i].getCodigo() == codigoVooLancado){
+            verificacao=true;
+            posicaoVoo=i;
+        }
+    }
+    if (verificacao == false){
+        cout << "Código de Voo inexistente" << endl;
+        return;
+    } else if(voos[posicaoVoo].getEstado() != 1){
+        cout << "Voo não está disponível para lançamento" << endl;
+        return;
+    } else {
+        for (int j = 0; j < astronautas.size(); j++){
+            if (astronautas[j].getCodigoVoo() == codigoVooLancado){
+                qtdPassageiros++;
+                if(astronautas[j].getDisponibilidade()==false){
+                    disponibilidadePassageiros=false;
+                }
+            }    
+        }
+        
+    } 
+    
+    if (qtdPassageiros >=1 && disponibilidadePassageiros==true){
+        voos[posicaoVoo].setEstado(2);
+        
+        for (int j = 0; j < astronautas.size(); j++){
+            if (astronautas[j].getCodigoVoo() == codigoVooLancado){
+                astronautas[j].setDisponibilidade(false);
+                astronautas[j].addVooAoHistorio(codigoVooLancado);
+            }    
+        }
+    } else {
+        cout << "Não é possível lançar este Voo";
+    }
+}
+
+void explodirVoo(vector<Astronauta> &astronautas, vector<Voo> &voos){
+    int codigoVooLancado;
+    int posicaoVoo;
+    bool verificacao=false;
+
+    cout << "Digite o código do Voo: ";
+    cin >> codigoVooLancado;
+    cout << "" << endl;
+
+    for (int i = 0; i < voos.size(); i++){
+        if(voos[i].getCodigo() == codigoVooLancado){
+            verificacao=true;
+            voos[i].setEstado(4);
+            posicaoVoo=i;
+        }
+    }
+    if (verificacao == false){
+        cout << "Código de Voo inexistente" << endl;
+        return;
+    } else {
+        cout << "Voo " << voos[posicaoVoo].getCodigo() << " explodido com sucesso!" << endl;
+        for (int j = 0; j < astronautas.size(); j++){
+            if (astronautas[j].getCodigoVoo() == codigoVooLancado){
+                astronautas[j].setVivo(false);
+
+            }    
+        }
+    } 
+}
+
+void finalizarVoo(vector<Astronauta> &astronautas, vector<Voo> &voos){
+    int codigoVooLancado;
+    int posicaoVoo;
+    bool verificacao=false;
+
+    cout << "Digite o código do Voo: ";
+    cin >> codigoVooLancado;
+    cout << "" << endl;
+
+    for (int i = 0; i < voos.size(); i++){
+        if(voos[i].getCodigo() == codigoVooLancado){
+            verificacao=true;
+            posicaoVoo=i;
+        }
+    }
+    if (verificacao == false){
+        cout << "Código de Voo inexistente" << endl;
+        return;
+    } else {
+        cout << "Voo " << voos[posicaoVoo].getCodigo() << " finalizado com sucesso!" << endl;
+        for (int j = 0; j < astronautas.size(); j++){
+            if (astronautas[j].getCodigoVoo() == codigoVooLancado){
+                astronautas[j].setDisponibilidade(true);
+            }    
+        }
+    } 
 }
 
 int main(){
@@ -237,19 +350,22 @@ int main(){
                 adicionaAstronautaEmVoo(astronautas, voos);
                 break;
             case 4:
+                removeAstronautaDoVoo(astronautas, voos);
                 break;
             case 5:
-                
+                lancarVoo(astronautas, voos);
                 break;
             case 6:
-               
+                explodirVoo(astronautas, voos);
                 break;
             case 7:
+                finalizarVoo(astronautas, voos);
                 break;
             case 8:
+                listarVoos(astronautas, voos);
                 break;
             case 9:
-                listarAstronautas(astronautas);
+                listarAstronautasMortos(astronautas);
                 break;
             case 0:
                 cout << "Saindo..." << endl;
