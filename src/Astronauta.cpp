@@ -1,4 +1,4 @@
-#include "Astronauta.hpp"
+#include "../include/Astronauta.hpp"
 using namespace std;
 
 Astronauta::Astronauta(string nome, string cpf, int idade){

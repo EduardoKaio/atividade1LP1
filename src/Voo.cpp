@@ -1,4 +1,4 @@
-#include "Voo.hpp"
+#include "../include/Voo.hpp"
 #include <iostream>
 
 Voo::Voo(int codigo){
