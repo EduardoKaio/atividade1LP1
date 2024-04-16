@@ -9,6 +9,7 @@ void cadastrarAstronauta(vector<Astronauta> &astronautas) {
     string nome;
     string cpf;
     int idade;
+    int choice;
     cout << "Digite o nome do astronauta: ";
     cin >> nome;
     cout << "" << endl;
@@ -23,24 +24,62 @@ void cadastrarAstronauta(vector<Astronauta> &astronautas) {
     
     astronautas.push_back(Astronauta(nome, cpf, idade));
     cout << "Astronauta cadastrado com sucesso!" << endl;
-    sleep(2);
-    system("clear");
+    
+    cout << "Deseja retornar ao Menu?" << endl;
+    cout << "1. Sim" << endl;
+    cout << "2. Não" << endl;
+    cout << "Escolha uma opção: ";
+    cin >> choice;
+    if(choice == 1){
+            sleep(2);
+            cout << "Voltando ao Menu Principal..." << endl;
+            system("clear");
+            return;
+        } else if (choice == 2){
+            system("clear");
+            cadastrarAstronauta(astronautas);
+        } else {
+            cout << "Valor inválido. Voltando ao Menu Principal..." << endl;
+            sleep(2);
+            system("clear");
+            return;
+        }
 }
 
 void cadastrarVoo(vector<Voo> &voos) {
     system("clear");
     int codigo;
+    int choice;
     cout << "Digite o código do voo: ";
     cin >> codigo;
     cout << "" << endl;
     voos.push_back(Voo(codigo));
     cout << "Voo cadastrado com sucesso!" << endl;
-    sleep(2);
-    system("clear");
+    cout << "Deseja retornar ao Menu?" << endl;
+    cout << "1. Sim" << endl;
+    cout << "2. Não" << endl;
+    cout << "Escolha uma opção: ";
+    cin >> choice;
+    if(choice == 1){
+            system("clear");
+            cout << "Voltando ao Menu Principal... << endl";
+            sleep(2);
+            system("clear");
+            return;
+        } else if (choice == 2){
+            system("clear");
+            cadastrarVoo(voos);
+        } else {
+            cout << "Valor inválido.\nVoltando ao Menu Principal..." << endl;
+            sleep(2);
+            system("clear");
+            return;
+        }
 }
 
 void listarAstronautasMortos(vector<Astronauta> &astronautas) {
     system("clear");
+    int choice;
     for (int i = 0; i < astronautas.size(); i++){
         if(astronautas[i].getVivo()==false){
             cout << "Nome: " << astronautas[i].getNome() << ", CPF: " << astronautas[i].getCpf() 
@@ -58,7 +97,26 @@ void listarAstronautasMortos(vector<Astronauta> &astronautas) {
             cout << "" << endl;
         }
     }
-    sleep(2);
+    cout << "Deseja retornar ao Menu?" << endl;
+    cout << "1. Sim" << endl;
+    cout << "2. Não" << endl;
+    cout << "Escolha uma opção: ";
+    cin >> choice;
+    if(choice == 1){
+            system("clear");
+            cout << "Voltando ao Menu Principal... << endl";
+            sleep(2);
+            system("clear");
+            return;
+        } else if (choice == 2){
+            system("clear");
+            listarAstronautasMortos(astronautas);
+        } else {
+            cout << "Valor inválido.\nVoltando ao Menu Principal..." << endl;
+            sleep(2);
+            system("clear");
+            return;
+        }
 }
 
 void adicionaAstronautaEmVoo(vector<Astronauta> &astronautas, vector<Voo> &voos) {
@@ -67,7 +125,8 @@ void adicionaAstronautaEmVoo(vector<Astronauta> &astronautas, vector<Voo> &voos)
     string cpf;
     bool verificacao=false;
     int posicao_voo;
-
+    int choice;
+    
     cout << "Digite o código do voo: ";
     cin >> codigo;
     cout << "" << endl;
@@ -108,8 +167,26 @@ void adicionaAstronautaEmVoo(vector<Astronauta> &astronautas, vector<Voo> &voos)
         system("clear");
         return;
     }
-    sleep(2);
-    system("clear");
+    cout << "Deseja retornar ao Menu?" << endl;
+    cout << "1. Sim" << endl;
+    cout << "2. Não" << endl;
+    cout << "Escolha uma opção: ";
+    cin >> choice;
+    if(choice == 1){
+            system("clear");
+            cout << "Voltando ao Menu Principal... << endl";
+            sleep(2);
+            system("clear");
+            return;
+        } else if (choice == 2){
+            system("clear");
+            adicionaAstronautaEmVoo(astronautas, voos);
+        } else {
+            cout << "Valor inválido.\nVoltando ao Menu Principal..." << endl;
+            sleep(2);
+            system("clear");
+            return;
+        }
 }
 
 void removeAstronautaDoVoo(vector<Astronauta> &astronautas, vector<Voo> &voos) {
