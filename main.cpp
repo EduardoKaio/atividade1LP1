@@ -3,13 +3,12 @@
 #include <string>
 #include "include/Astronauta.hpp"
 #include "include/Voo.hpp"
-#include "include/MenuFunctions.hpp"
+#include "include/Gestao.hpp" 
 
 using namespace std;
 
 int main(){
-    vector<Astronauta> astronautas;
-    vector<Voo> voos;
+    Gestao gestao;
     int choice;
 
     do {
@@ -23,6 +22,7 @@ int main(){
         cout << "7. Finalizar um voo" << endl;
         cout << "8. Listar todos os voos" << endl;
         cout << "9. Listar todos os astronautas mortos" << endl;
+        cout << "10. Listar todos os astronauta" << endl;
 
         cout << "0. Sair" << endl;
 
@@ -31,31 +31,34 @@ int main(){
 
         switch (choice) {
             case 1:
-                cadastrarAstronauta(astronautas);
+                gestao.cadastrarAstronauta();
                 break;
             case 2:
-                cadastrarVoo(voos);
+                gestao.cadastrarVoo();
                 break;
             case 3:
-                adicionaAstronautaEmVoo(astronautas, voos);
+                gestao.adicionaAstronautaEmVoo();
                 break;
             case 4:
-                removeAstronautaDoVoo(astronautas, voos);
+                gestao.removeAstronautaDoVoo();
                 break;
             case 5:
-                lancarVoo(astronautas, voos);
+                gestao.lancarVoo();
                 break;
             case 6:
-                explodirVoo(astronautas, voos);
+                gestao.explodirVoo();
                 break;
             case 7:
-                finalizarVoo(astronautas, voos);
+                gestao.finalizarVoo();
                 break;
             case 8:
-                listarVoos(astronautas, voos);
+                gestao.listarVoos();
                 break;
             case 9:
-                listarAstronautasMortos(astronautas);
+                gestao.listarAstronautasMortos();
+                break;
+            case 10:
+                gestao.listarAstronautas();
                 break;
             case 0:
                 cout << "Saindo..." << endl;

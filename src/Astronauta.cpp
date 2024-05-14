@@ -1,13 +1,15 @@
 #include "../include/Astronauta.hpp"
 using namespace std;
 
+Astronauta::Astronauta() {}
+
 Astronauta::Astronauta(string nome, string cpf, int idade){
     this->nome = nome;
     this->cpf = cpf;
     this->idade = idade;
 }
 
-int Astronauta::getCodigoVoo(){
+int Astronauta::getCodigoVoo() const{ 
     return codigoVoo;
 }
 
@@ -15,15 +17,15 @@ void Astronauta::setCodigoVoo(int codigoVoo){
     this->codigoVoo = codigoVoo;
 }
 
-string Astronauta::getNome(){
+string Astronauta::getNome() const{
     return nome;
 }
 
-string Astronauta::getCpf(){
+string Astronauta::getCpf() const{
     return cpf;
 }
 
-int Astronauta::getIdade(){
+int Astronauta::getIdade() const{
     return idade;
 }
 
@@ -55,10 +57,10 @@ bool Astronauta::getVivo(){
 void Astronauta::setVivo(bool vivo){
     this->vivo=vivo;
 }
-vector<int> Astronauta::getHistoricoDeVoos(){
-    return voos;
-};
+vector<int> Astronauta::getHistoricoDeVoos() { 
+    return historicoDeVoos; 
+}
 
 void Astronauta::addVooAoHistorio(int codigoVoo){
-    this->voos.push_back(codigoVoo);
+    historicoDeVoos.push_back(codigoVoo);
 }

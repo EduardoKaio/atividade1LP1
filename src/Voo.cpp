@@ -1,5 +1,10 @@
 #include "../include/Voo.hpp"
 #include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+Voo::Voo() {}
 
 Voo::Voo(int codigo){
     this->codigo=codigo;
@@ -25,6 +30,17 @@ void Voo::setEstado(int novo_estado) {
     }
 }
 
-//cadastrar voo
-// adicionar astronauta no voo (codigo do voo e cpf do astronauta)
-// remover astronauta do voo (codigo do voo e cpf do astronauta)
+void Voo::adicionarAstronauta(Astronauta astronauta) {
+    passageiros.push_back(astronauta); // Adiciona o endereço do astronauta à lista
+}
+
+    // Método para remover um astronauta da lista de passageiros
+void Voo::removerAstronauta(Astronauta astronauta) {
+    passageiros.erase(std::remove_if(passageiros.begin(), passageiros.end(), 
+        [&](const Astronauta& a) { return a.getCpf() == astronauta.getCpf(); }),
+        passageiros.end());
+}
+
+vector<Astronauta> Voo::getPassageiros() {
+    return passageiros;
+}
