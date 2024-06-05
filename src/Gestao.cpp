@@ -284,7 +284,12 @@ void Gestao::listarVoos() {
             cout << "   Passageiros: " << endl;
             vector<Astronauta> passageiros = it.second.getPassageiros();
             for (int j = 0; j < passageiros.size(); j++) {
-                cout << "       Nome: " << passageiros[j].getNome() << ", CPF: " << passageiros[j].getCpf() << ", Idade: " << passageiros[j].getIdade() << endl;
+                cout << "       Nome: " << passageiros[j].getNome() << ", CPF: " << passageiros[j].getCpf() << ", Idade: " << passageiros[j].getIdade();
+                if (passageiros[j].getDisponibilidade()) {
+                    cout << ", Disponibilidade: Disponível" << endl;
+                } else {
+                    cout << ", Disponibilidade: Indisponível" << endl;
+                }
             }
         }
     }
@@ -297,7 +302,12 @@ void Gestao::listarVoos() {
             cout << "   Passageiros: " << endl;
             vector<Astronauta> passageiros = it.second.getPassageiros();
             for (int j = 0; j < passageiros.size(); j++) {
-                cout << "       Nome: " << passageiros[j].getNome() << ", CPF: " << passageiros[j].getCpf() << ", Idade: " << passageiros[j].getIdade() << endl;
+                cout << "       Nome: " << passageiros[j].getNome() << ", CPF: " << passageiros[j].getCpf() << ", Idade: " << passageiros[j].getIdade();
+                if (passageiros[j].getDisponibilidade()) {
+                    cout << ", Disponibilidade: Disponível" << endl;
+                } else {
+                    cout << ", Disponibilidade: Indisponível" << endl;
+                }
             }
         }
     }
@@ -310,7 +320,12 @@ void Gestao::listarVoos() {
             cout << "   Passageiros: " << endl;
             vector<Astronauta> passageiros = it.second.getPassageiros();
             for (int j = 0; j < passageiros.size(); j++) {
-                cout << "       Nome: " << passageiros[j].getNome() << ", CPF: " << passageiros[j].getCpf() << ", Idade: " << passageiros[j].getIdade() << endl;
+                cout << "       Nome: " << passageiros[j].getNome() << ", CPF: " << passageiros[j].getCpf() << ", Idade: " << passageiros[j].getIdade();
+                if (passageiros[j].getDisponibilidade()) {
+                    cout << ", Disponibilidade: Disponível" << endl;
+                } else {
+                    cout << ", Disponibilidade: Indisponível" << endl;
+                }
             }
         }
     }
@@ -323,7 +338,12 @@ void Gestao::listarVoos() {
             cout << "   Passageiros: " << endl;
             vector<Astronauta> passageiros = it.second.getPassageiros();
             for (int j = 0; j < passageiros.size(); j++) {
-                cout << "       Nome: " << passageiros[j].getNome() << ", CPF: " << passageiros[j].getCpf() << ", Idade: " << passageiros[j].getIdade() << endl;
+                cout << "       Nome: " << passageiros[j].getNome() << ", CPF: " << passageiros[j].getCpf() << ", Idade: " << passageiros[j].getIdade();
+                if (passageiros[j].getDisponibilidade()) {
+                    cout << ", Disponibilidade: Disponível" << endl;
+                } else {
+                    cout << ", Disponibilidade: Indisponível" << endl;
+                }
             }
         }
     }
